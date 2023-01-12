@@ -1,35 +1,19 @@
-import { ApiStatus } from '@/api/api'
 import { fetchProducts, Product } from '@/api/productApi'
-import { withAsync } from '@/helpers/withAsync'
-import { useState } from 'react'
-import useApiStatus from './useApiStatus'
+import { useQuery } from 'react-query'
 
 const useFetchProducts = () => {
   const {
-    setStatus,
-    isError: isFetchProductsError,
-    isIdeal: isFetchProductsIdeal,
-    isPinding: isFetchProductPinding,
-    isSuccess: isFetchProductSuccess,
-  } = useApiStatus(ApiStatus.IDLE)
-  const [products, setProducts] = useState<Product[]>([])
-  const initProuducts = async () => {
-    const { response, error } = await withAsync(() => fetchProducts())
-    if (error) {
-      setStatus(ApiStatus.ERROR)
-    } else if (response) {
-      setProducts(response.data)
-      setStatus(ApiStatus.SUCCESS)
-    }
-  }
+    data: products,
+    isLoading: isProductsLoading,
+    isSuccess: isProductSuccess,
+    isError: isProductError,
+  } = useQuery<Product[]>('products', fetchProducts)
 
   return {
-    initProuducts,
     products,
-    isFetchProductPinding,
-    isFetchProductSuccess,
-    isFetchProductsError,
-    isFetchProductsIdeal,
+    isProductError,
+    isProductsLoading,
+    isProductSuccess,
   }
 }
 
