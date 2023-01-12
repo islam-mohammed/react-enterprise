@@ -22,7 +22,11 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test:unit": "craco test"
+    "test:unit": "craco test",
+    "test:e2e:open": "start-server-and-test start http-get://localhost:3000 cypress:open",
+    "test:e2e:run": "start-server-and-test start http-get://localhost:3000 cypress:run",
+    "cypress:run": "cypress run",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -44,8 +48,10 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
+    "@testing-library/cypress": "^9.0.0",
     "autoprefixer": "^10.4.13",
     "craco-alias": "^3.0.1",
+    "cypress": "^12.3.0",
     "postcss": "^8.4.21",
     "postcss-extend": "^1.0.5",
     "postcss-import": "^15.1.0",
